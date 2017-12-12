@@ -10,8 +10,8 @@ export default ({ zipCode, apiKey }) => {
       crossDomain: true
     })
       .catch(e => console.log(e))
-      .pluck("response")
-      
+      .pluck("response");
+
     const Location = () =>
       React.fromObservable(
         weather$.pluck("name").map(location => (
@@ -21,21 +21,25 @@ export default ({ zipCode, apiKey }) => {
         ))
       );
     const temp = weather$
-      .pluck('main', 'temp')
+      .pluck("main", "temp")
       .map(kelvin => parseInt(kelvin - 273.15, 10));
     const icon = weather$
-      .pluck("weather", '0', 'icon')
+      .pluck("weather", "0", "icon")
       .map(icon => `http://openweathermap.org/img/w/${icon}.png`);
-    const description = weather$.pluck('weather', '0', 'description');  
+    const description = weather$.pluck("weather", "0", "description");
     return (
       <div className="weather-widget">
         <Location />
         <div>
-          <span><strong>{description}</strong></span>
+          <span>
+            <strong>{description}</strong>
+          </span>
           <img src={icon} />
         </div>
-        
-        <span><strong>{temp} &#8451;</strong></span>
+
+        <span>
+          <strong>{temp} &#8451;</strong>
+        </span>
       </div>
     );
   }
